@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/core/providers/tasks_provider.dart';
 import 'package:to_do_app/features/board/presentation/widgets/task_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/features/add_task/presentation/pages/add_task_page.dart';
 
-class AllTasks extends StatelessWidget {
+class AllTasks extends StatefulWidget {
   const AllTasks({Key? key}) : super(key: key);
 
   @override
+  State<AllTasks> createState() => _AllTasksState();
+}
+
+class _AllTasksState extends State<AllTasks> {
+  @override
   Widget build(BuildContext context) {
+    var tasks = Provider.of<TasksProvider>(context);
     return Stack(
       children: [
-        ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 4.w),
-              child: TaskWidget(),
-            );
-          },
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.h),
+          child: ListView.builder(
+            itemCount: tasks.getTasks.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                child: TaskWidget(task: tasks.getTasks[index]),
+              );
+            },
+          ),
         ),
         Positioned(
           bottom: 20,
@@ -25,7 +36,7 @@ class AllTasks extends StatelessWidget {
           right: 20,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green[400],
+              backgroundColor: Theme.of(context).primaryColor,
             ),
             child: Text('Add Task'),
             onPressed: () {

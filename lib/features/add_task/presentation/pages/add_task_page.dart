@@ -23,8 +23,14 @@ class AddTask extends StatelessWidget {
               color: Colors.black),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios,color: Colors.black,),
-          onPressed: (){},),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: AddTaskWidget(),
     );
